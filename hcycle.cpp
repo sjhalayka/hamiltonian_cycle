@@ -162,24 +162,6 @@ int main()
 	vector<bool> g(cities.size(), true);
 	vector< vector<bool> > graph(cities.size(), g);
 
-//	vector<bool> graph(size_t(V)*size_t(V), true);
-
-
-	//for (size_t i = 0; i < graph.size(); i++)
-	//{
-	//	graph[i] = true;
-	//}
-
-	//bool graph1[V][V] = 
-	//{ 
-	//	{ 1, 1, 1, 1, 1 },
-	//	{ 1, 1, 1, 1, 1 },
-	//	{ 1, 1, 1, 1, 1 },
-	//	{ 1, 1, 1, 1, 1 },
-	//	{ 1, 1, 1, 1, 1 },
-	//};
-
-
 	hamCycle(graph);
 
 	return 0;
