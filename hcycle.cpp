@@ -158,6 +158,7 @@ int main()
 		cities.push_back(c);
 	}
 
+	cities.resize(100);
 
 	vector<bool> g(cities.size(), true);
 	vector< vector<bool> > graph(cities.size(), g);
