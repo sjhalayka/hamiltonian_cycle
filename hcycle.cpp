@@ -118,8 +118,6 @@ public:
 
 int main()
 {
-	long unsigned int num_cities = 0;
-
 	ifstream city_file("cities.csv");
 	vector<city> cities;
 	string line;
