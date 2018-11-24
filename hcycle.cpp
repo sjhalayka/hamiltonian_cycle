@@ -18,17 +18,13 @@ using namespace string_utilities;
 
 
 
-const int V = 5;
-
-void printSolution(int path[]);
-
 
 
 /*
 * check if the vertex v can be added at index 'pos' in the Hamiltonian Cycle
 */
 
-bool isSafe(int v, bool graph[V][V], int path[], int pos)
+bool isSafe(int v, vector<vector<bool> > graph, int path[], int pos)
 {
 	if (graph[path[pos - 1]][v] == 0)
 		return false;
@@ -43,8 +39,10 @@ bool isSafe(int v, bool graph[V][V], int path[], int pos)
 
 
 /* solve hamiltonian cycle problem */
-bool hamCycleUtil(bool graph[V][V], int path[], int pos)
+bool hamCycleUtil(vector<vector<bool> > graph, int path[], int pos)
 {
+	const size_t V = graph[0].size();
+
 	if (pos == V)
 	{
 		if (graph[path[pos - 1]][path[0]] == 1)
@@ -69,31 +67,7 @@ bool hamCycleUtil(bool graph[V][V], int path[], int pos)
 	return false;
 }
 
-
-/* solves the Hamiltonian Cycle problem using Backtracking.*/
-bool hamCycle(bool graph[V][V])
-{
-	vector<int> path(V, -1);
-
-	path[0] = 0;
-
-	if (hamCycleUtil(graph, &path[0], 1) == false)
-	{
-		cout << "\nSolution does not exist" << endl;
-
-		return false;
-	}
-
-	printSolution(&path[0]);
-
-	return true;
-}
-
-
-
-/* Main */
-
-void printSolution(int path[])
+void printSolution(int path[], const size_t V)
 {
 	cout << "Solution Exists:";
 	cout << " Following is one Hamiltonian Cycle \n" << endl;
@@ -105,6 +79,33 @@ void printSolution(int path[])
 }
 
 
+/* solves the Hamiltonian Cycle problem using Backtracking.*/
+bool hamCycle(vector<vector<bool> > graph)
+{
+	const size_t V = graph[0].size();
+
+	vector<int> path(V, -1);
+
+	path[0] = 0;
+
+	if (hamCycleUtil(graph, &path[0], 1) == false)
+	{
+		cout << "\nSolution does not exist" << endl;
+
+		return false;
+	}
+
+	printSolution(&path[0], V);
+
+	return true;
+}
+
+
+
+/* Main */
+
+
+
 class city
 {
 public:
@@ -114,14 +115,24 @@ public:
 
 
 
+
 int main()
 {
+	long unsigned int num_cities = 0;
+
 	ifstream city_file("cities.csv");
 	vector<city> cities;
 	string line;
 
+	// Skip first line
+	getline(city_file, line);
+
+	size_t line_count = 0;
+
 	while (getline(city_file, line))
 	{
+		line_count++;
+
 		if ("" == line)
 			continue;
 
@@ -145,22 +156,31 @@ int main()
 		iss >> c.y;
 
 		cities.push_back(c);
-
-		cout << c.id << " " << c.x << " " << c.y << endl;
-		cout << line << endl;
 	}
 
 
-	bool graph1[V][V] = 
-	{ 
-		{ 1, 1, 1, 1, 1 },
-		{ 1, 1, 1, 1, 1 },
-		{ 1, 1, 1, 1, 1 },
-		{ 1, 1, 1, 1, 1 },
-		{ 1, 1, 1, 1, 1 },
-	};
+	vector<bool> g(cities.size(), true);
+	vector< vector<bool> > graph(cities.size(), g);
 
-	hamCycle(graph1);
+//	vector<bool> graph(size_t(V)*size_t(V), true);
+
+
+	//for (size_t i = 0; i < graph.size(); i++)
+	//{
+	//	graph[i] = true;
+	//}
+
+	//bool graph1[V][V] = 
+	//{ 
+	//	{ 1, 1, 1, 1, 1 },
+	//	{ 1, 1, 1, 1, 1 },
+	//	{ 1, 1, 1, 1, 1 },
+	//	{ 1, 1, 1, 1, 1 },
+	//	{ 1, 1, 1, 1, 1 },
+	//};
+
+
+	hamCycle(graph);
 
 	return 0;
 }
