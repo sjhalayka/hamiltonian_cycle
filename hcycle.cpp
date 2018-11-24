@@ -10,6 +10,7 @@
 #include <fstream>
 #include <string>
 #include <sstream>
+#include <ctime>
 using namespace std;
 
 
@@ -118,6 +119,8 @@ public:
 
 int main()
 {
+	srand(time(0));
+
 	ifstream city_file("cities.csv");
 	vector<city> cities;
 	string line;
@@ -160,6 +163,14 @@ int main()
 
 	vector<bool> g(cities.size(), true);
 	vector< vector<bool> > graph(cities.size(), g);
+
+	for (size_t i = 0; i < graph.size(); i++)
+	{
+		for (size_t j = 0; j < graph[i].size(); j++)
+		{
+			graph[i][j] = rand() % 2;
+		}
+	}
 
 	hamCycle(graph);
 
