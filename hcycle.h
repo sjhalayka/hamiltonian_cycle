@@ -28,7 +28,6 @@ void keyboard_func(unsigned char key, int x, int y);
 void mouse_func(int button, int state, int x, int y);
 void motion_func(int x, int y);
 void passive_motion_func(int x, int y);
-void output_to_mesh2(void);
 
 void render_string(int x, const int y, void *font, const string &text);
 void draw_objects(void);
